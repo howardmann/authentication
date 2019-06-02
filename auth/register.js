@@ -4,7 +4,7 @@ let register = module.exports = {}
 let bcrypt = require('bcrypt');
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
-let User = require('../repositories/userRepository')
+let User = require('../repositories/userRepository.js')
 
 // =======USER SIGN UP AND HASH PASSWORD STRATEGY========
 passport.use('local-signup', new LocalStrategy({
@@ -12,13 +12,13 @@ passport.use('local-signup', new LocalStrategy({
     passwordField: 'password',
     passReqToCallback: true // lets you access other params in req.body
   },
-  (req, email, password, done) => {
+  async (req, email, password, done) => {
     // Return false if user already exists - failureRedirect
-    let user = User.findBy('email', email)
+    let user = await User.findBy('email', email)
     if (user) { return done(null, false) }
 
     // Create new user and return the user - successRedirect
-    let newUser = User.create({
+    let newUser = await User.create({
       email,
       passwordHash: bcrypt.hashSync(password, 10), // hash the password early
       phone: req.body.phone

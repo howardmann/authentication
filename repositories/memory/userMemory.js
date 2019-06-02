@@ -1,17 +1,15 @@
-let User = module.exports = {}
-
-let USERS = require('../db/usersMemory')
+let USERS = require('../../db/usersMemory')
 
 let findUsers = () => {
-  return USERS
+  return Promise.resolve(USERS)
 }
 
 let findUserBy = (prop, val) => {
   let user = USERS.find(user => user[prop] == val)
-  return user
+  return Promise.resolve(user)
 }
 
-let createUser = (payload) => {
+let createUser = async (payload) => {
   let {email, passwordHash, phone, admin} = payload
   let newUser = {
     id: USERS.length + 1,
@@ -21,7 +19,8 @@ let createUser = (payload) => {
     admin: admin || false
   }
   USERS.push(newUser)
-  return User.findBy('id', newUser.id)
+  let user = await findUserBy('id', newUser.id)
+  return Promise.resolve(user)
 }
 
 module.exports = {

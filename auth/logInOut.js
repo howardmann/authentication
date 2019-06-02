@@ -12,9 +12,9 @@ passport.use('local-login', new LocalStrategy({
     usernameField: 'email', // default is username, override to accept email
     passwordField: 'password',
     passReqToCallback: true // allows us to access req in the call back
-  }, (req, email, password, done) => {
+  }, async (req, email, password, done) => {
     // Check if user and password is valid
-    let user = User.findBy('email', email)
+    let user = await User.findBy('email', email)
     let passwordValid = user && bcrypt.compareSync(password, user.passwordHash)
 
     // If password valid call done and serialize user.id to req.user property

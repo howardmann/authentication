@@ -28,9 +28,9 @@ authorization.signupRequired = authenticate({
 })
 
 
-authorization.adminRequired = (req, res, next) => {
+authorization.adminRequired = async (req, res, next) => {
   let id = req.user && req.user.id
-  let user = User.findBy('id', id)
+  let user = await User.findBy('id', id)
   let isAdmin = user && user.admin
 
   if (!isAdmin) {

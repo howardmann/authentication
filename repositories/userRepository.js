@@ -1,4 +1,8 @@
-let {findUsers, findUserBy, createUser} = require('./userRepositoryMemory.js')
+let {
+  findUsers, 
+  findUserBy, 
+  createUser
+} = require('./mongodb/userMongoDB.js')
 
 const UserRepository = {
   find: findUsers,
