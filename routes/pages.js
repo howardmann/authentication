@@ -7,3 +7,7 @@ pages.home = (req, res, next) => {
 pages.admin = (req, res, next) => {
   res.render('pages/admin')
 }
+
+pages.special = (req, res, next) => {
+  res.render('pages/special')
+}

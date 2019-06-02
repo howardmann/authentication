@@ -1,10 +1,12 @@
+let register = module.exports = {}
+
+// Dependecies
 let bcrypt = require('bcrypt');
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
 let User = require('../model/user.js')
 
-
-// =======USER SIGN UP AND HASH PASSWORD========
+// =======USER SIGN UP AND HASH PASSWORD STRATEGY========
 passport.use('local-signup', new LocalStrategy({
     usernameField: 'email', // map username to custom field, we call it email in our form
     passwordField: 'password',
@@ -21,35 +23,27 @@ passport.use('local-signup', new LocalStrategy({
       passwordHash: bcrypt.hashSync(password, 10),
       phone: req.body.phone
     })
-    
+
     // save the user_id to the req.user property
     return done(null, {id: newUser.id})
   }
 ))
 
-// ======USER LOGIN AUTHENTICATION=======
-passport.use('local-login', new LocalStrategy({
-  usernameField: 'email',
-  passwordField: 'password',
-  passReqToCallback: true
-}, (req, email, password, done) => {
-  // Check if user and password is valid
-  let user = User.findBy('email', email)
-  let passwordValid = user && User.comparePassword(password, user.passwordHash)  
-  if (passwordValid) {
-    // serialize the user_id to req.user property
-    return done(null, {id: user.id})
+// GET route to render signup page
+register.signupPage = (req, res, next) => {
+  res.render('auth/signup')
+}
+
+// POST route to signup user and redirect 
+register.signup = passport.authenticate('local-signup', {
+  successRedirect: '/users/profile',
+  failureRedirect: '/signup',
+  failureFlash: {
+    type: 'messageFailure',
+    message: 'Email already taken.'
+  },
+  successFlash: {
+    type: 'messageSuccess',
+    message: 'Successfully signed up.'
   }
-  
-  return done(null, false, {message: 'Invalid email and/or password'});
-}))
-
-
-// ======GET AND SET SESSIONS======
-passport.serializeUser(function (user, done) {
-  done(null, user)
-})
-
-passport.deserializeUser(function (user, done) {
-  done(null, user)
 })
