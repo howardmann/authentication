@@ -29,11 +29,11 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
-
+app.use(flash())
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash())
+
 
 // global route middleware set property user if authenticated
 app.use((req, res, next) => {
@@ -41,6 +41,12 @@ app.use((req, res, next) => {
   next()
 })
 
+// global route middleware set flash messages
+app.use((req, res, next) => {
+  res.locals.messageSuccess = req.flash('messageSuccess')
+  res.locals.messageFailure = req.flash('messageFailure')
+  next();
+})
 // Routes
 app.use(require('./routes/index'))
 

@@ -1,7 +1,6 @@
 const express = require('express')
 let router = express.Router()
 
-
 // auth endpoints
 let auth = require('../controllers/auth')
 router
@@ -9,6 +8,7 @@ router
   .post('/login', auth.login)
   .get('/signup', auth.signupPage)
   .post('/signup', auth.signup)
+  .get('/logout', auth.logout)
 
 // pages endpoints
 let pages = require('../controllers/pages')
@@ -24,7 +24,6 @@ router
   .get('/users/profile', users.show)
   .get('/users', users.index)
   .post('/users', users.create)
-
 
 
 

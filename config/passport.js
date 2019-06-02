@@ -36,10 +36,12 @@ passport.use('local-login', new LocalStrategy({
   // Check if user and password is valid
   let user = User.findBy('email', email)
   let passwordValid = user && User.comparePassword(password, user.password)  
-  if (!passwordValid) { return done(null, false) }
-
-  // If valid save the user_id to the req.user property
-  return done(null, {id: user.id})
+  if (passwordValid) {
+    // serialize the user_id to req.user property
+    return done(null, {id: user.id})
+  }
+  
+  return done(null, false, {message: 'Invalid email and/or password'});
 }))
 
 

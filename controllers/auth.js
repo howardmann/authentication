@@ -9,9 +9,7 @@ auth.loginPage = (req, res, next) => {
 }
 
 auth.signupPage = (req, res, next) => {
-  res.render('auth/signup', {
-    message: req.flash('message')
-  })
+  res.render('auth/signup')
 }
 
 // auth.login = (req, res, next) => {
@@ -21,14 +19,14 @@ auth.signupPage = (req, res, next) => {
 
 auth.login = passport.authenticate('local-login', {
   successRedirect: '/',
-  failuredRedirect: '/login',
+  failureRedirect: '/login',
   failureFlash: {
-    type: 'message',
-    message: 'Email or Password incorrect'
+    type: 'messageFailure',
+    message: 'Invalid email and/ or password.'
   },
   successFlash: {
-    type: 'message',
-    message: 'Successful login'
+    type: 'messageSuccess',
+    message: 'Successfully logged in.'
   }
 })
 
@@ -42,11 +40,17 @@ auth.signup = passport.authenticate('local-signup', {
   successRedirect: '/users',
   failureRedirect: '/signup',
   failureFlash: {
-    type: 'message',
+    type: 'messageFailure',
     message: 'Email already taken.'
   },
   successFlash: {
-    type: 'message',
+    type: 'messageSuccess',
     message: 'Successfully signed up.'
   }
 })
+
+auth.logout = (req, res, next) => {
+  req.logout();
+  req.flash('messageSuccess', 'Successfully logged out')
+  res.redirect('/login')
+}
