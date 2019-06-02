@@ -8,10 +8,18 @@
 </head>
 <body>
   <h1>Web App</h1>
+  <div style="background-color: palegoldenrod">    
+    {{message}}
+  </div>
+  
   <nav>
     <p>
-      <a href="/login">Login</a>
-      <a href="/logout">Logout</a>
+      {{#if user}}
+        <a href="/logout">Logout</a>
+      {{else}}
+        <a href="/login">Login</a>
+      {{/if}}
+      
       <a href="/signup">Signup</a>
     </p>
     <a href="/">Home</a> |

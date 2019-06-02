@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 8080
 // authentication
 const passport = require('passport')
 const session = require('express-session')
+const flash = require('connect-flash')
 
 let app = express()
 
@@ -29,9 +30,10 @@ app.use(session({
   saveUninitialized: true
 }));
 
+
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(flash())
 
 // global route middleware set property user if authenticated
 app.use((req, res, next) => {

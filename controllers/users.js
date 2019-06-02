@@ -7,11 +7,12 @@ users.index = (req, res, next) => {
   res.send(users)
 }
 
-users.show = (req, res, next) => {
-  // TODO: replace with session
-  let id = req.params.id || 1
+users.show = (req, res, next) => { 
+  let id = req.user && req.user.id
   let user = User.findBy('id', id)
-  res.render('users/profile', {user})
+  res.render('users/profile',{
+    userProfile: user
+  })
 }
 
 users.create = (req, res, next) => {

@@ -1,6 +1,10 @@
 <p>Show user</p>
-
-{{!-- TODO: only show profile if session otherwise redirect to login page --}}
-<p>email: {{user.email}}</p>
-<p>mobile: {{user.mobile}}</p>
-<p>password: {{user.password}}</p>
+{{#if user}}
+  <p>email: {{userProfile.email}}</p>
+  <p>phone: {{userProfile.phone}}</p>
+  <p>password: {{userProfile.password}}</p>
+{{else}}
+  <p>
+    <a href="/login">Login to view profile</a>
+  </p>
+{{/if}}

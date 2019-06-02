@@ -24,3 +24,7 @@ User.findBy = (prop, val) => {
   let user = USERS.find(user => user[prop] == val)
   return user
 }
+
+User.comparePassword = (password, userHash) => {
+  return bcrypt.compareSync(password, userHash)
+}
