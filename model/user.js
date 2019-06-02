@@ -4,12 +4,12 @@ let bcrypt = require('bcrypt')
 let USERS = require('../db/users')
 
 User.create = (payload) => {
-  let {email, password, mobile, admin} = payload
+  let {email, passwordHash, phone, admin} = payload
   let newUser = {
     id: USERS.length + 1,
     email,
-    password: bcrypt.hashSync(password, 10),
-    mobile,
+    passwordHash,
+    phone,
     admin: admin || false
   }
   USERS.push(newUser)

@@ -18,7 +18,7 @@ passport.use('local-signup', new LocalStrategy({
     // Create new user and return the user - successRedirect
     let newUser = User.create({
       email,
-      password: bcrypt.hashSync(password, 10),
+      passwordHash: bcrypt.hashSync(password, 10),
       phone: req.body.phone
     })
     
@@ -35,7 +35,7 @@ passport.use('local-login', new LocalStrategy({
 }, (req, email, password, done) => {
   // Check if user and password is valid
   let user = User.findBy('email', email)
-  let passwordValid = user && User.comparePassword(password, user.password)  
+  let passwordValid = user && User.comparePassword(password, user.passwordHash)  
   if (passwordValid) {
     // serialize the user_id to req.user property
     return done(null, {id: user.id})
