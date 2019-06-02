@@ -15,7 +15,7 @@ As a logged in user with admin privileges, I can do all of the above plus:
 - view all users
 - view admin pages
 
-Click here for a live demo of the app.
+[Click here for a live demo of the app.](https://authdemo.now.sh)
 
 Here is an overview of pages and permissions.
 ```shell
