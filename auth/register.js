@@ -20,7 +20,7 @@ passport.use('local-signup', new LocalStrategy({
     // Create new user and return the user - successRedirect
     let newUser = User.create({
       email,
-      passwordHash: bcrypt.hashSync(password, 10),
+      passwordHash: bcrypt.hashSync(password, 10), // hash the password early
       phone: req.body.phone
     })
 

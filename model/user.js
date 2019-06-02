@@ -8,7 +8,7 @@ User.create = (payload) => {
   let newUser = {
     id: USERS.length + 1,
     email,
-    passwordHash,
+    passwordHash, // only accept and write password as a hash
     phone,
     admin: admin || false
   }
