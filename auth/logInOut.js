@@ -4,7 +4,7 @@ let logInOut = module.exports = {}
 let bcrypt = require('bcrypt');
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
-let User = require('../model/user.js')
+let User = require('../repositories/userRepository.js')
 
 // ======USER LOGIN AUTHENTICATION STRATEGY=======
 passport.use('local-login', new LocalStrategy({
@@ -15,7 +15,7 @@ passport.use('local-login', new LocalStrategy({
   }, (req, email, password, done) => {
     // Check if user and password is valid
     let user = User.findBy('email', email)
-    let passwordValid = user && User.comparePassword(password, user.passwordHash)
+    let passwordValid = user && bcrypt.compareSync(password, user.passwordHash)
 
     // If password valid call done and serialize user.id to req.user property
     if (passwordValid) {

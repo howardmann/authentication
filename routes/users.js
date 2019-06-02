@@ -1,6 +1,6 @@
 let users = module.exports = {}
 
-let User = require('../model/user')
+let User = require('../repositories/userRepository')
 
 users.index = (req, res, next) => {
   let users = User.find()

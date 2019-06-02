@@ -4,7 +4,7 @@ let register = module.exports = {}
 let bcrypt = require('bcrypt');
 let passport = require('passport');
 let LocalStrategy = require('passport-local').Strategy;
-let User = require('../model/user.js')
+let User = require('../repositories/userRepository')
 
 // =======USER SIGN UP AND HASH PASSWORD STRATEGY========
 passport.use('local-signup', new LocalStrategy({

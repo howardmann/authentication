@@ -1,8 +1,8 @@
 const express = require('express')
 let router = express.Router()
 
-// auth endpoints
-let auth = require('../auth')
+// === AUTH ENDPOINTS ===
+const auth = require('../auth')
 router
   .get('/login', auth.loginPage)
   .post('/login', auth.login)
@@ -10,6 +10,7 @@ router
   .post('/signup', auth.signup)
   .get('/logout', auth.logout)
 
+// === BOILERPLATE === 
 // pages endpoints
 let pages = require('./pages')
 
@@ -18,7 +19,6 @@ router
   .get('/admin', auth.loginRequired, auth.adminRequired, pages.admin)
   .get('/special', auth.signupRequired, pages.special)
   
-
 // users endpoints
 let users = require('./users')
 router

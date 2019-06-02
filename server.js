@@ -1,15 +1,10 @@
-require('dotenv').config()
-
+// === BOILERPLATE ===
 // dependencies
+require('dotenv').config()
 const express = require('express')
 const exphbs = require('express-handlebars')
 const bodyParser = require('body-parser')
 const PORT = process.env.PORT || 8080
-
-// authentication
-const passport = require('passport')
-const session = require('express-session')
-const flash = require('connect-flash')
 
 let app = express()
 
@@ -21,8 +16,14 @@ app.set('view engine', '.hbs')
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// ===== AUTHENTICATION ======
+const passport = require('passport')
+const session = require('express-session')
+const flash = require('connect-flash')
+const userInViews = require('./auth/middleware/userInViews.js')
+const flashMessageInViews = require('./auth/middleware/flashMessageInViews.js')
 
-// Authentication
+// Sessions
 app.use(session({
   secret: 'ilikecats',
   cookie: {},
@@ -31,26 +32,18 @@ app.use(session({
 }));
 app.use(flash())
 
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
+// Custom middleware authentication and flash message view middleware
+app.use(userInViews)
+app.use(flashMessageInViews)
 
-// global route middleware set property user if authenticated
-app.use((req, res, next) => {
-  res.locals.user = req.isAuthenticated()
-  next()
-})
-
-// global route middleware set flash messages
-app.use((req, res, next) => {
-  res.locals.messageSuccess = req.flash('messageSuccess')
-  res.locals.messageFailure = req.flash('messageFailure')
-  next();
-})
 // Routes
 app.use(require('./routes/index'))
 
-
+// === BOILERPLATE ===
 // Catch and send error messages
 app.use(function (err, req, res, next) {
   if (err) {

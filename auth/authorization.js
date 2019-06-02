@@ -1,6 +1,6 @@
 let authorization = module.exports = {}
 
-let User = require('../model/user.js')
+let User = require('../repositories/userRepository')
 
 // Higher order function to keep DRY
 let authenticate = ({type, message, redirectPath}) => {
