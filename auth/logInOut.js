@@ -24,9 +24,7 @@ passport.use('local-login', new LocalStrategy({
       })
     }
     // If invalid call done with false and flash message
-    return done(null, false, {
-      message: 'Invalid email and/or password'
-    });
+    return done(null, false);
 }))
 
 
