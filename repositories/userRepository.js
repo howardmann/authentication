@@ -1,8 +1,12 @@
 let {
-  findUsers, 
-  findUserBy, 
+  // findUsers, 
+  // findUserBy, 
   createUser
 } = require('./mongodb/userMongoDB.js')
+
+let {
+  findUsers
+} = require('./pg/userPG')
 
 const UserRepository = {
   find: findUsers,
