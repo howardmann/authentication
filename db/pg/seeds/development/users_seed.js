@@ -10,10 +10,10 @@ exports.seed = async function(knex, Promise) {
   let felixPassword = bcrypt.hashSync('chicken',10) 
   
   await knex.raw(`
-    INSERT INTO Users (id, email, password_hash, phone, admin) VALUES
-    (1, 'howie@email.com', '${howiePassword}', '142', TRUE),
-    (2, 'helabadga@gmail.com', '${helaPassword}', '1213', FALSE),
-    (3, 'felix@email.com', '${felixPassword}', '1423232', FALSE)
+    INSERT INTO Users (email, password_hash, phone, admin) VALUES
+    ('howie@email.com', '${howiePassword}', '142', TRUE),
+    ('helabadga@gmail.com', '${helaPassword}', '1213', FALSE),
+    ('felix@email.com', '${felixPassword}', '1423232', FALSE)
   `)
 };
 

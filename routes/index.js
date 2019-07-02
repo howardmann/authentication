@@ -23,6 +23,7 @@ router
 let users = require('./users')
 router
   .get('/users/profile', auth.loginRequired, users.show)
-  .get('/users', auth.loginRequired, auth.adminRequired, users.index)
+  // .get('/users', auth.loginRequired, auth.adminRequired, users.index)
+  .get('/users', users.index)
 
 module.exports = router
