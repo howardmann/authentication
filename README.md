@@ -49,44 +49,48 @@ Dependency descriptions
     "express-handlebars": "^3.1.0", // template engine
     "express-session": "^1.16.1", // track sessions
     "mongoose": "^5.5.12", // mongodb ORM
+    "knex": "^0.14.6", // postgresql adapter
     "passport": "^0.4.0", // authentication
     "passport-local": "^1.0.0" // passport strategy for local DB auth (e.g. username and password)
+    "pg": "^7.11.0" // pg client
   }
 
 ```
 
 This is a summary of the relevant directories
 ```shell
-auth // where all the authorization and authentication logic lives
+auth                            // where all the authorization and authentication logic lives
   L middleware
-    L flashMessageInViews.js  // enables all views to access {{messageSuccess}} and {{messageFailure}}
-    L userInViews.js // enables all views to check if user session exists, e.g. enables us to flash login or logout link
-  L authorization.js // middleware to gate routes (e.g. loginRequired, adminRequired, signupRequired)
-  L index.js // entry point
-  L logInOut.js // login and out pages and passport authentication logic
-  L register.js // signup page and create user passport logic
-  L serializer.js // serializes session user_id via passport
-routes // where routes live
-  L index.js // calls auth methods
-  L pages.js // other pages
-  L users.js // users pages
+    L flashMessageInViews.js    // enables all views to access {{messageSuccess}} and {{messageFailure}}
+    L userInViews.js            // enables all views to check if user session exists, e.g. enables us to flash login or logout link
+  L authorization.js            // middleware to gate routes (e.g. loginRequired, adminRequired, signupRequired)
+  L index.js                    // entry point
+  L logInOut.js                 // login and out pages and passport authentication logic
+  L register.js                 // signup page and create user passport logic
+  L serializer.js               // serializes session user_id via passport
+routes                          // where routes live
+  L index.js                    // calls auth methods
+  L pages.js                    // other pages
+  L users.js                    // users pages
 views
-  L auth // templates for login and signup page
+  L auth                        // templates for login and signup page
     L login.hbs
     L signup.hbs
   L pages
   L users
   L layouts
-repositories // applying clean programming principles (separation of concerns) to make it easier to switch out DBs
-  L userRepository.js // model wrapper for user CRUD operations
-  L memory // user in memory (start off for dev purposes)
-  L mongodb // user in mongodb db (for persistence)
+repositories                    // applying clean programming principles (separation of concerns) to make it easier to switch out DBs
+  L userRepository.js           // model wrapper for user CRUD operations
+  L memory                      // user in memory (start off for dev purposes)
+  L mongodb                     // user in mongodb db (for persistence)
+  L pg                          // user in postgresql db (using knex adapter helper)
 model
-  L monbodb // mongodb model and schema
+  L monbodb                     // mongodb model and schema
 db
-  L mongodb // mongodb connection and seeds
-  L memory // simple array for dev purposes
-server.js // express webserver and dependencies 
+  L mongodb                     // mongodb connection and seeds
+  L pg                          // postgresql db migration, seeds and knex adapter
+  L memory                      // simple array for dev purposes
+server.js                       // express webserver and dependencies 
 ```
 
 We will approach authentication and authorization via the following steps:
