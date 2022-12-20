@@ -19,7 +19,7 @@
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.1",
-    "knex": "^0.14.6",
+    "knex": "^2.3.0",
     "mongoose": "^5.5.12",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
